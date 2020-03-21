@@ -16,5 +16,25 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
+
+        private void button_Click(object sender, EventArgs e)
+        {
+            DialogResult respuesta = MessageBox.Show("Esta seguro de eliminar?",
+                             "confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (respuesta == DialogResult.Yes)
+            {
+                origen.CommandText = "Delete From Cliente Where Id_cliente = " + dataGridView1 + "; ";
+                origen.Connection = Coneccion;
+                Coneccion.Open();
+                origen.ExecuteNonQuery();
+                Coneccion.Close();
+                MessageBox.Show("Cliente Eliminado Exitosamente");
+                limpiar();
+                llenarGrid();
+            }
+            else if (respuesta == DialogResult.No) llenarGrid();
+
+        }
+    }
     }
 }
